@@ -2,7 +2,7 @@ package com.fs.testkmp
 
 class Greeting {
     fun greeting(): String {
-        arrayListOf("sds", "sd").fore
+        arrayListOf("sds", "sd")
 
         return "Hello, ${Platform().platform}!"
     }
