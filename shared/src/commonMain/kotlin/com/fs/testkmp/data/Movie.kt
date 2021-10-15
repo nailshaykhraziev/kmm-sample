@@ -23,6 +23,7 @@ data class Movie(
     val genres: List<Int>?
 )
 
+@Serializable
 data class MoviesResponse(
     @SerialName("results")
     val movies: List<Movie>
