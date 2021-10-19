@@ -25,8 +25,8 @@ class Main {
             serializer = KotlinxSerializer(json)
         }
         install(Logging) {
-            logger = Logger.DEFAULT
             level = LogLevel.BODY
+            logger =  Logger.SIMPLE
         }
         install("API_KEY") {
             sendPipeline.intercept(HttpSendPipeline.Before) {
