@@ -47,5 +47,6 @@ dependencies {
     implementation("androidx.compose.material:material:$composeVersion")
     implementation("androidx.compose.foundation:foundation:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling:$composeVersion")
+    implementation("io.coil-kt:coil-compose:1.4.0")
     implementation("androidx.activity:activity-compose:1.3.1")
 }
