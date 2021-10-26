@@ -4,7 +4,12 @@ import android.os.Bundle
 import android.os.StrictMode
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import com.fs.testkmp.Main
 import timber.log.Timber
 
@@ -25,5 +30,18 @@ class MainActivity : AppCompatActivity() {
     private fun plantTimberTree() {
         Timber.plant(Timber.DebugTree())
         StrictMode.enableDefaults()
+    }
+
+    @Composable
+    fun MovieNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+        NavHost(
+            navController = navController,
+            startDestination = "TODO",
+            modifier = modifier
+        ) {
+            composable("TODO") {
+
+            }
+        }
     }
 }

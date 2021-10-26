@@ -3,10 +3,7 @@ package com.fs.testkmp.android
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
@@ -17,8 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.fs.testkmp.Main
 import com.fs.testkmp.data.Movie
@@ -34,8 +36,6 @@ fun MovieContent(
 ) {
     val state = main.sendRequest()
         .stateIn(lifecycleScope, SharingStarted.Eagerly, emptyList()).collectAsState()
-
-
 
     MaterialTheme {
         Surface() {
@@ -67,11 +67,17 @@ fun MovieContent(
 
 @Composable
 fun MovieHolder(item: Movie, action: (Movie) -> Unit, painter: Painter) {
-    Card(modifier = Modifier.padding(8.dp)) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White)) {
+    Card(
+        elevation = 4.dp,
+        modifier = Modifier.padding(8.dp)
+            .background(Color.White)
+            .clickable { action(item) }) {
+        Row(modifier = Modifier.fillMaxWidth()
+            .padding(horizontal = 16.dp, 8.dp)) {
             Image(
+                modifier = Modifier.height(200.dp)
+                    .aspectRatio(0.75f)
+                    .align(Alignment.CenterVertically),
                 painter = rememberImagePainter(
                     data = item.posterPath.toMovieThumbnailUrl(),
                     builder = {
@@ -79,16 +85,20 @@ fun MovieHolder(item: Movie, action: (Movie) -> Unit, painter: Painter) {
                         error(R.drawable.ic_android_black_24dp)
                     }
                 ),
-                modifier = Modifier
-                    .size(200.dp)
-                    .align(Alignment.CenterHorizontally),
                 contentDescription = ""
             )
-            Text(text = item.title, modifier = Modifier
-                .clickable { action(item) }
-                .fillMaxWidth()
-                .padding(start = 16.dp, 0.dp, 0.dp, 0.dp)
-            )
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Text(text = item.title, fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 16.dp, 0.dp, 0.dp, 0.dp)
+                )
+                Text(text = item.overview, color = Color.Gray, maxLines = 8,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 16.dp, 0.dp, 0.dp, 0.dp)
+                )
+            }
         }
     }
 }
@@ -107,7 +117,7 @@ fun MovieItemPreview() {
         voteAverage = null,
         posterPath = "/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg",
         releaseDate = "",
-        overview = "",
+        overview = "Bla bla bla bla bla bla",
         genres = listOf()
     ), action = {}, painter = resourcePainter
     )
