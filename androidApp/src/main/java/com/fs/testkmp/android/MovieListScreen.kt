@@ -14,8 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,52 +28,52 @@ import kotlinx.coroutines.flow.stateIn
 import timber.log.Timber
 
 @Composable
-fun MovieContent(
+fun MovieListContent(
     main: Main,
-    lifecycleScope: CoroutineScope
+    lifecycleScope: CoroutineScope,
+    onMovieClick: (id: Int) -> Unit = {}
 ) {
     val state = main.sendRequest()
         .stateIn(lifecycleScope, SharingStarted.Eagerly, emptyList()).collectAsState()
 
-    MaterialTheme {
-        Surface() {
-            Scaffold(topBar = {
-                TopAppBar(title = { Text("Test KMP App") })
-            }) {
-                LazyColumn(contentPadding = it) {
-                    items(items = state.value) {
-                        Timber.tag("MovieContent").e(it.posterPath)
-                        MovieHolder(
-                            item = it,
-                            action = {
-
-                            },
-                            painter = rememberImagePainter(
-                                data = it.posterPath.toMovieThumbnailUrl(),
-                                builder = {
-                                    placeholder(R.drawable.ic_android_black_24dp)
-                                    error(R.drawable.ic_android_black_24dp)
-                                }
-                            ),
-                        )
+    LazyColumn() {
+        items(items = state.value) {
+            Timber.tag("MovieContent").e(it.posterPath)
+            MovieHolder(
+                item = it,
+                action = {
+                    it.id?.let(onMovieClick)
+                },
+                painter = rememberImagePainter(
+                    data = it.posterPath.toMovieThumbnailUrl(),
+                    builder = {
+                        placeholder(R.drawable.ic_android_black_24dp)
+                        error(R.drawable.ic_android_black_24dp)
                     }
-                }
-            }
+                ),
+            )
         }
     }
+
 }
+
 
 @Composable
 fun MovieHolder(item: Movie, action: (Movie) -> Unit, painter: Painter) {
     Card(
         elevation = 4.dp,
-        modifier = Modifier.padding(8.dp)
+        modifier = Modifier
+            .padding(8.dp)
             .background(Color.White)
             .clickable { action(item) }) {
-        Row(modifier = Modifier.fillMaxWidth()
-            .padding(horizontal = 16.dp, 8.dp)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, 8.dp)
+        ) {
             Image(
-                modifier = Modifier.height(200.dp)
+                modifier = Modifier
+                    .height(200.dp)
                     .aspectRatio(0.75f)
                     .align(Alignment.CenterVertically),
                 painter = rememberImagePainter(
@@ -88,14 +86,18 @@ fun MovieHolder(item: Movie, action: (Movie) -> Unit, painter: Painter) {
                 contentDescription = ""
             )
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text(text = item.title, fontSize = 16.sp,
+                Text(
+                    text = item.title, fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(start = 16.dp, 0.dp, 0.dp, 0.dp)
                 )
-                Text(text = item.overview, color = Color.Gray, maxLines = 8,
+                Text(
+                    text = item.overview, color = Color.Gray, maxLines = 8,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(start = 16.dp, 0.dp, 0.dp, 0.dp)
                 )
             }
@@ -110,15 +112,16 @@ private fun String.toMovieThumbnailUrl() =
 @Composable
 fun MovieItemPreview() {
     val resourcePainter = painterResource(id = R.drawable.ic_android_black_24dp)
-    MovieHolder(item = Movie(
-        id = null,
-        title = "Some movie",
-        voteCount = null,
-        voteAverage = null,
-        posterPath = "/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg",
-        releaseDate = "",
-        overview = "Bla bla bla bla bla bla",
-        genres = listOf()
-    ), action = {}, painter = resourcePainter
+    MovieHolder(
+        item = Movie(
+            id = null,
+            title = "Some movie",
+            voteCount = null,
+            voteAverage = null,
+            posterPath = "/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg",
+            releaseDate = "",
+            overview = "Bla bla bla bla bla bla",
+            genres = listOf()
+        ), action = {}, painter = resourcePainter
     )
 }
