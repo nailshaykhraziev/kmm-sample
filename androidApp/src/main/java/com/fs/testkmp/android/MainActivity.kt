@@ -72,7 +72,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             composable(Screen.MovieContent.title + "/{id}") {
-                MovieContent(id = it.arguments?.get("id").toString().toInt())
+                MovieContent(
+                    id = it.arguments?.get("id").toString().toInt(),
+                    main = main,
+                    lifecycleScope = lifecycleScope
+                )
             }
         }
     }

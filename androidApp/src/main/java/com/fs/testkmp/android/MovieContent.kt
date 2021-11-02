@@ -2,29 +2,61 @@ package com.fs.testkmp.android
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.fs.testkmp.data.Movie
+import com.fs.testkmp.Main
+import com.fs.testkmp.data.MovieDetails
+import com.fs.testkmp.data.toMovieThumbnailUrl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import timber.log.Timber
 
 @Composable
-fun MovieContent(id: Int) {
+fun MovieContent(
+    id: Int,
+    main: Main,
+    lifecycleScope: CoroutineScope,
+) {
+    Timber.e("Movie launch")
+
+    val movie: MovieDetails? = null
+
+//        main.getMovieById(id)
+//        .stateIn(lifecycleScope, SharingStarted.Eagerly, null)
+//        .collectAsState().value
+
+    Timber.e("Movie: $id")
+
+    movie?.also {
+        MovieDetailsContent(
+            movieDetails = it,
+            painter = rememberImagePainter(
+                data = it.toMovieThumbnailUrl(),
+                builder = {
+                    placeholder(R.drawable.ic_android_black_24dp)
+                    error(R.drawable.ic_android_black_24dp)
+                }
+            ))
+    }
+}
+
+@Composable
+private fun MovieDetailsContent(
+    movieDetails: MovieDetails,
+    painter: Painter
+) {
+
     Card(
         elevation = 4.dp,
         modifier = Modifier
@@ -51,4 +83,23 @@ fun MovieContent(id: Int) {
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun MoviePreview() {
+    val resourcePainter = painterResource(id = R.drawable.ic_android_black_24dp)
+    MovieDetailsContent(
+        movieDetails = MovieDetails(
+            id = 123,
+            title = "Some movie",
+            voteCount = 123,
+            voteAverage = 8.8,
+            posterPath = "/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg",
+            releaseDate = "23.08.2011",
+            overview = "Bla bla bla bla bla bla",
+            genres = listOf(),
+
+        ), painter = resourcePainter
+    )
 }

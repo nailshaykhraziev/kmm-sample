@@ -1,17 +1,14 @@
 package com.fs.testkmp
 
-import android.os.StrictMode
 import com.fs.testkmp.data.MovieApi
 import io.ktor.client.*
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.serialization.json.Json
 
 class Main {
@@ -26,7 +23,7 @@ class Main {
         }
         install(Logging) {
             level = LogLevel.BODY
-            logger =  Logger.SIMPLE
+            logger = Logger.SIMPLE
         }
         install("API_KEY") {
             sendPipeline.intercept(HttpSendPipeline.Before) {
@@ -39,7 +36,11 @@ class Main {
         MovieApi(httpClient)
     }
 
-    fun sendRequest() = flow {
+    fun getPopularList() = flow {
         emit(movieApi.getPopularMovies())
+    }.flowOn(Dispatchers.Default)
+
+    fun getMovieById(id: Int) = flow {
+        emit(movieApi.getMovieById(id))
     }.flowOn(Dispatchers.Default)
 }

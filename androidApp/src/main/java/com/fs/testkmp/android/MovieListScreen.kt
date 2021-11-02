@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.fs.testkmp.Main
 import com.fs.testkmp.data.Movie
+import com.fs.testkmp.data.toMovieThumbnailUrl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -33,10 +34,10 @@ fun MovieListContent(
     lifecycleScope: CoroutineScope,
     onMovieClick: (id: Int) -> Unit = {}
 ) {
-    val state = main.sendRequest()
+    val state = main.getPopularList()
         .stateIn(lifecycleScope, SharingStarted.Eagerly, emptyList()).collectAsState()
 
-    LazyColumn() {
+    LazyColumn {
         items(items = state.value) {
             Timber.tag("MovieContent").e(it.posterPath)
             MovieHolder(
@@ -45,7 +46,7 @@ fun MovieListContent(
                     it.id?.let(onMovieClick)
                 },
                 painter = rememberImagePainter(
-                    data = it.posterPath.toMovieThumbnailUrl(),
+                    data = it.toMovieThumbnailUrl(),
                     builder = {
                         placeholder(R.drawable.ic_android_black_24dp)
                         error(R.drawable.ic_android_black_24dp)
@@ -65,7 +66,10 @@ fun MovieHolder(item: Movie, action: (Movie) -> Unit, painter: Painter) {
         modifier = Modifier
             .padding(8.dp)
             .background(Color.White)
-            .clickable { action(item) }) {
+            .clickable {
+                Timber.tag("MovieHolder").e("clickable")
+                action(item)
+            }) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -77,7 +81,7 @@ fun MovieHolder(item: Movie, action: (Movie) -> Unit, painter: Painter) {
                     .aspectRatio(0.75f)
                     .align(Alignment.CenterVertically),
                 painter = rememberImagePainter(
-                    data = item.posterPath.toMovieThumbnailUrl(),
+                    data = item.toMovieThumbnailUrl(),
                     builder = {
                         placeholder(R.drawable.ic_android_black_24dp)
                         error(R.drawable.ic_android_black_24dp)
@@ -104,9 +108,6 @@ fun MovieHolder(item: Movie, action: (Movie) -> Unit, painter: Painter) {
         }
     }
 }
-
-private fun String.toMovieThumbnailUrl() =
-    "https://image.tmdb.org/t/p/w185$this"
 
 @Preview
 @Composable
