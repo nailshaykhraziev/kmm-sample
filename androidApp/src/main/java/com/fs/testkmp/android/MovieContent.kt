@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,25 +21,22 @@ import com.fs.testkmp.data.toMovieThumbnailUrl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
+import org.koin.androidx.compose.getViewModel
 import timber.log.Timber
 
 @Composable
 fun MovieContent(
     id: Int,
-    main: Main,
-    lifecycleScope: CoroutineScope,
+    viewModel: MainViewModel = getViewModel()
 ) {
-    Timber.e("Movie launch")
 
-    val movie: MovieDetails? = null
-
-//        main.getMovieById(id)
-//        .stateIn(lifecycleScope, SharingStarted.Eagerly, null)
-//        .collectAsState().value
+    val movie = remember {
+        viewModel.getMovieById(id)
+    }
 
     Timber.e("Movie: $id")
 
-    movie?.also {
+    movie.collectAsState().value?.also {
         MovieDetailsContent(
             movieDetails = it,
             painter = rememberImagePainter(

@@ -11,30 +11,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.serialization.json.Json
 
-class Main {
-
-    private val httpClient = HttpClient {
-        install(JsonFeature) {
-            val json = Json {
-                ignoreUnknownKeys = true
-                useAlternativeNames = false
-            }
-            serializer = KotlinxSerializer(json)
-        }
-        install(Logging) {
-            level = LogLevel.BODY
-            logger = Logger.SIMPLE
-        }
-        install("API_KEY") {
-            sendPipeline.intercept(HttpSendPipeline.Before) {
-                context.url.parameters.append("api_key", "3240b6a52ee540b0a26fb1d7687ffafa")
-            }
-        }
-    }
-
-    private val movieApi by lazy {
-        MovieApi(httpClient)
-    }
+class Main(
+    private val movieApi: MovieApi
+) {
 
     fun getPopularList() = flow {
         emit(movieApi.getPopularMovies())
