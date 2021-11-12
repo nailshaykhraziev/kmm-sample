@@ -6,7 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -20,22 +21,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.fs.testkmp.Main
 import com.fs.testkmp.data.Movie
 import com.fs.testkmp.data.toMovieThumbnailUrl
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
+import org.koin.androidx.compose.getViewModel
 import timber.log.Timber
 
 @Composable
 fun MovieListContent(
-    main: Main,
-    lifecycleScope: CoroutineScope,
+    viewModel: MainViewModel = getViewModel(),
     onMovieClick: (id: Int) -> Unit = {}
 ) {
-    val state = main.getPopularList()
-        .stateIn(lifecycleScope, SharingStarted.Eagerly, emptyList()).collectAsState()
+
+    val state = viewModel.state.collectAsState()
 
     LazyColumn {
         items(items = state.value) {
@@ -55,9 +52,7 @@ fun MovieListContent(
             )
         }
     }
-
 }
-
 
 @Composable
 fun MovieHolder(item: Movie, action: (Movie) -> Unit, painter: Painter) {
@@ -67,7 +62,9 @@ fun MovieHolder(item: Movie, action: (Movie) -> Unit, painter: Painter) {
             .padding(8.dp)
             .background(Color.White)
             .clickable {
-                Timber.tag("MovieHolder").e("clickable")
+                Timber
+                    .tag("MovieHolder")
+                    .e("clickable")
                 action(item)
             }) {
         Row(

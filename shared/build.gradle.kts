@@ -39,6 +39,8 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+
+                implementation("io.insert-koin:koin-core:3.1.2")
             }
         }
         val commonTest by getting {

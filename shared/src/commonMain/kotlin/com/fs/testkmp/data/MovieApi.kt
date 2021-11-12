@@ -5,7 +5,7 @@ import io.ktor.client.request.*
 
 private const val BASE_URL = "https://api.themoviedb.org/3/"
 
-internal class MovieApi(
+class MovieApi(
     private val client: HttpClient
 ) {
 
