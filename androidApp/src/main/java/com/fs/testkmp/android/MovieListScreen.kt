@@ -88,7 +88,8 @@ fun MovieHolder(item: Movie, action: (Movie) -> Unit, painter: Painter) {
             )
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = item.title, fontSize = 16.sp,
+                    text = item.title,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .fillMaxWidth()
