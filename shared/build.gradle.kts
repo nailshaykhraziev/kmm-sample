@@ -41,6 +41,9 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 
                 implementation("io.insert-koin:koin-core:3.1.2")
+                implementation("org.kodein.db:kodein-db:0.8.1-beta")
+                implementation("org.kodein.db:kodein-db-serializer-kotlinx:0.8.1-beta")
+
             }
         }
         val commonTest by getting {

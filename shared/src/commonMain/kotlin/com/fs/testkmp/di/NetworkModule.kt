@@ -11,7 +11,7 @@ import org.koin.dsl.module
 
 val networkModule = module {
     single {
-        Main(get())
+        Main(get(), get())
     }
     single {
         MovieApi(get())

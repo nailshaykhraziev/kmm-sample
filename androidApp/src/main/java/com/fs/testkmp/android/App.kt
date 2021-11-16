@@ -2,6 +2,8 @@ package com.fs.testkmp.android
 
 import android.app.Application
 import com.fs.testkmp.android.di.appModule
+import com.fs.testkmp.di.dbModule
+import com.fs.testkmp.di.filePathModule
 import com.fs.testkmp.di.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -15,7 +17,7 @@ class App: Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(appModule, networkModule)
+            modules(appModule, networkModule, dbModule, filePathModule())
         }
     }
 }

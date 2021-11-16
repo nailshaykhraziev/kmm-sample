@@ -113,7 +113,7 @@ fun MovieItemPreview() {
     val resourcePainter = painterResource(id = R.drawable.ic_android_black_24dp)
     MovieHolder(
         item = Movie(
-            id = null,
+            id = 1,
             title = "Some movie",
             voteCount = null,
             voteAverage = null,
