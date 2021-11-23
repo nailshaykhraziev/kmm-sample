@@ -1,32 +1,18 @@
 package com.fs.testkmp.db
 
 import com.fs.testkmp.data.Movie
-import org.kodein.db.*
-import org.kodein.memory.use
+import com.fs.testkmp.data.MovieResponse
 
-class MovieDao(
-    private val db: DB
-) {
-    suspend fun saveMovie(movie: Movie) {
-        db.put(movie)
-    }
+interface MovieDao {
+    suspend fun saveMovie(movieEntity: MovieResponse)
 
-    suspend fun saveAll(movies: List<Movie>) {
-        movies.forEach { saveMovie(it) }
-    }
+    suspend fun saveAll(movieEntities: List<MovieResponse>)
 
-    suspend fun getAll() =
-        db.find<Movie>().all()
+    suspend fun getAll(): List<Movie>
 
-    suspend fun getMovieById(id: Int) = db.getById<Movie>(id)
+    suspend fun getMovieById(id: Int): Movie?
 
-    suspend fun deleteById(id: Int) {
-        db.deleteById<Movie>(id)
-    }
+    suspend fun deleteById(id: Int)
 
-    suspend fun deleteAll() {
-        db.find<Movie>().all().use {
-            db.deleteAll(it)
-        }
-    }
+    suspend fun deleteAll()
 }

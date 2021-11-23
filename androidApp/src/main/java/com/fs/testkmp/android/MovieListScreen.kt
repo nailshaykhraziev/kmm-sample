@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.fs.testkmp.data.Movie
+import com.fs.testkmp.data.MovieEntity
 import com.fs.testkmp.data.toMovieThumbnailUrl
 import org.koin.androidx.compose.getViewModel
 import timber.log.Timber

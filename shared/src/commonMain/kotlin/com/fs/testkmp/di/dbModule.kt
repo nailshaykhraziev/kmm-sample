@@ -1,6 +1,7 @@
 package com.fs.testkmp.di
 
-import com.fs.testkmp.data.Movie
+import com.fs.testkmp.data.MovieEntity
+import com.fs.testkmp.db.KodeinMovieDao
 import com.fs.testkmp.db.MovieDao
 import org.kodein.db.DB
 import org.kodein.db.impl.open
@@ -12,13 +13,14 @@ val dbModule = module {
 
     single {
         DB.open(get(named(FILE_PATH_QUALIFIER)), KotlinxSerializer {
-            +Movie.serializer()
+            +MovieEntity.serializer()
         })
     }
 
-    single {
-        MovieDao(get())
+    single<MovieDao>(named("Kodein")) {
+        KodeinMovieDao(get())
     }
+
 }
 
 const val FILE_PATH_QUALIFIER = "FilePath"
