@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -85,5 +86,12 @@ android {
     defaultConfig {
         minSdkVersion(23)
         targetSdkVersion(31)
+    }
+}
+
+sqldelight {
+    database("MyDatabase") {
+        packageName = "com.fs.testkmp"
+        sourceFolders = listOf("sqldelight")
     }
 }

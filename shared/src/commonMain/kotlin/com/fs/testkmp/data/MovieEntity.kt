@@ -27,7 +27,7 @@ data class MovieEntity(
 @Serializable
 data class MoviesResponse(
     @SerialName("results")
-    val movieEntities: List<MovieEntity>
+    val movieEntities: List<MovieResponse>
 )
 
 @Serializable

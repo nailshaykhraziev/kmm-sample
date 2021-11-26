@@ -9,7 +9,7 @@ import org.kodein.memory.use
 
 class KodeinMovieDao(
     private val db: DB
-):MovieDao {
+): MovieDao {
     override suspend fun saveMovie(movieEntity: MovieResponse) {
         db.put(movieEntity)
     }
@@ -36,4 +36,6 @@ class KodeinMovieDao(
             db.deleteAll(it)
         }
     }
+
+
 }

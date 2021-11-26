@@ -1,22 +1,19 @@
 package com.fs.testkmp
 
 import com.fs.testkmp.data.MovieApi
-import com.fs.testkmp.data.mapToMovie
-import com.fs.testkmp.db.KodeinMovieDao
+import com.fs.testkmp.db.MovieDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class Main(
     private val movieApi: MovieApi,
-    private val kodeinMovieDao: KodeinMovieDao
+    private val movieDao: MovieDao
 ) {
 
     fun getPopularList() = flow {
-        kodeinMovieDao.saveAll(movieApi.getPopularMovies())
-        emit(kodeinMovieDao.getAll().map {
-            it.mapToMovie()
-        })
+        movieDao.saveAll(movieApi.getPopularMovies())
+        emit(movieDao.getAll())
     }.flowOn(Dispatchers.Default)
 
     fun getMovieById(id: Int) = flow {

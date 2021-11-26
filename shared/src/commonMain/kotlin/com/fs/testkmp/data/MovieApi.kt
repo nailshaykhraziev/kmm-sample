@@ -9,7 +9,7 @@ class MovieApi(
     private val client: HttpClient
 ) {
 
-    suspend fun getPopularMovies(): List<MovieEntity> =
+    suspend fun getPopularMovies(): List<MovieResponse> =
         client.get<MoviesResponse>("${BASE_URL}movie/popular").movieEntities
 
     suspend fun getMovieById(

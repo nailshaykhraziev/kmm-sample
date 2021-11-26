@@ -3,6 +3,7 @@ package com.fs.testkmp.di
 import com.fs.testkmp.data.MovieEntity
 import com.fs.testkmp.db.KodeinMovieDao
 import com.fs.testkmp.db.MovieDao
+import com.fs.testkmp.db.SqlMovieDao
 import org.kodein.db.DB
 import org.kodein.db.impl.open
 import org.kodein.db.orm.kotlinx.KotlinxSerializer
@@ -19,6 +20,10 @@ val dbModule = module {
 
     single<MovieDao>(named("Kodein")) {
         KodeinMovieDao(get())
+    }
+
+    single<MovieDao>(named("SqlDelight")) {
+        SqlMovieDao()
     }
 
 }
