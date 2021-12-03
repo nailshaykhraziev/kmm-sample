@@ -46,8 +46,7 @@ kotlin {
                 implementation("io.insert-koin:koin-core:3.1.2")
                 implementation("org.kodein.db:kodein-db:0.8.1-beta")
                 implementation("org.kodein.db:kodein-db-serializer-kotlinx:0.8.1-beta")
-                implementation("com.squareup.sqldelight:runtime:$sqlDelight")
-
+                implementation("com.squareup.sqldelight:runtime:1.5.2")
             }
         }
         val commonTest by getting {
@@ -59,8 +58,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
-                implementation ("com.squareup.sqldelight:android-driver:$sqlDelight")
-
+                implementation("com.squareup.sqldelight:android-driver:$sqlDelight")
             }
         }
         val androidTest by getting {
@@ -73,7 +71,7 @@ kotlin {
             dependencies {
                 //Network
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
-                implementation ("com.squareup.sqldelight:native-driver:$sqlDelight")
+                implementation("com.squareup.sqldelight:native-driver:$sqlDelight")
 
             }
         }
@@ -91,8 +89,7 @@ android {
 }
 
 sqldelight {
-    database("MyDatabase") {
-        packageName = "com.fs.testkmp"
-        sourceFolders = listOf("sqldelight")
+    database("AppDatabase") {
+        packageName = "com.fs.db"
     }
 }

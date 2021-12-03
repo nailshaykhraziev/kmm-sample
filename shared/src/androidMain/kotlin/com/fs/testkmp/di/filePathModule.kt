@@ -10,10 +10,13 @@ actual fun filePathModule() = module {
         getDbPath(get())
     }
 
-//    single {
-//        AndroidSqliteDriver(database = MyDatabase.Schema, context, "test.db")
-//    }
+    single {
+        getSqldelight(get())
+    }
 }
 
 fun getDbPath(context: Context) =
     context.filesDir.absolutePath
+
+fun getSqldelight(context: Context) =
+    AndroidSqliteDriver(database = AppDatabase.Scheme, context, "test.db")
