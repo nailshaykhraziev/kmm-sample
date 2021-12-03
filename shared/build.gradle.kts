@@ -90,6 +90,11 @@ android {
 
 sqldelight {
     database("AppDatabase") {
-        packageName = "com.fs.db"
+        // трабла была в нэйминге и организации пакетов
+        packageName = "com.fs.testkmp.database" // генерится в build.generated.code.AppDatabase.com.fs.testkmp, тут и лежит наша бд
+
+        sourceFolders = listOf("sqldelight") // Этот пакет должен лежать в shared наравне с kotlin.
+                                            //   в нем должны быть ещё пакеты com.fs.testkmp, в которой
+                                            //   лежат sql`ные файлы
     }
 }
