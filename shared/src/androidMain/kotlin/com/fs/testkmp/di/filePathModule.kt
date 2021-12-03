@@ -1,6 +1,7 @@
 package com.fs.testkmp.di
 
 import android.content.Context
+import com.squareup.sqldelight.android.AndroidSqliteDriver
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -10,13 +11,13 @@ actual fun filePathModule() = module {
         getDbPath(get())
     }
 
-    single {
+    /*single {
         getSqldelight(get())
-    }
+    }*/
 }
 
 fun getDbPath(context: Context) =
     context.filesDir.absolutePath
 
-fun getSqldelight(context: Context) =
-    AndroidSqliteDriver(database = AppDatabase.Scheme, context, "test.db")
+/*fun getSqldelight(context: Context) =
+    AndroidSqliteDriver(database = AppDatabase.Scheme, context, "test.db")*/
