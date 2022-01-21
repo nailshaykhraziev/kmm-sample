@@ -7,11 +7,12 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val networkModule = module {
     single {
-        Main(get(), get())
+        Main(get(), get(named(DAO_QUALIFIER_DELIGHT)))
     }
     single {
         MovieApi(get())
