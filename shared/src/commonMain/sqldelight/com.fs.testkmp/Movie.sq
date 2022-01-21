@@ -1,7 +1,7 @@
 import kotlin.collections.List;
 
 CREATE TABLE movies (
-  id INTEGER NOT NULL PRIMARY KEY,
+  id INTEGER NOT NULL PRIMARY KEY ON CONFLICT REPLACE,
   title TEXT NOT NULL,
   vote_count INTEGER DEFAULT 0,
   vote_average REAL,

@@ -43,10 +43,10 @@ kotlin {
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 
-                implementation("io.insert-koin:koin-core:3.1.2")
+                implementation("io.insert-koin:koin-core:3.1.5")
                 implementation("org.kodein.db:kodein-db:0.8.1-beta")
                 implementation("org.kodein.db:kodein-db-serializer-kotlinx:0.8.1-beta")
-                implementation("com.squareup.sqldelight:runtime:1.5.2")
+                implementation("com.squareup.sqldelight:runtime:$sqlDelight")
             }
         }
         val commonTest by getting {
@@ -90,11 +90,11 @@ android {
 
 sqldelight {
     database("AppDatabase") {
-        // трабла была в нэйминге и организации пакетов
-        packageName = "com.fs.testkmp.database" // генерится в build.generated.code.AppDatabase.com.fs.testkmp, тут и лежит наша бд
-
-        sourceFolders = listOf("sqldelight") // Этот пакет должен лежать в shared наравне с kotlin.
-                                            //   в нем должны быть ещё пакеты com.fs.testkmp, в которой
-                                            //   лежат sql`ные файлы
+        // Ошибка была в нэйминге и организации пакетов
+        // Генерится в build.generated.code.AppDatabase.com.fs.testkmp, тут и лежит наша бд
+        packageName = "com.fs.testkmp.database"
+        // Этот пакет должен лежать в shared наравне с kotlin.
+        // В нем должны быть ещё пакеты com.fs.testkmp, где находятся sql файлы
+        sourceFolders = listOf("sqldelight")
     }
 }

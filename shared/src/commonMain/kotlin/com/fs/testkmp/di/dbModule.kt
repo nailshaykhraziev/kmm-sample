@@ -15,6 +15,9 @@ import org.koin.dsl.module
 
 const val FILE_PATH_QUALIFIER = "FilePath"
 
+const val DAO_QUALIFIER_KODEIN = "Kodein"
+const val DAO_QUALIFIER_DELIGHT = "SqlDelight"
+
 val dbModule = module {
 
     single {
@@ -31,7 +34,7 @@ val dbModule = module {
         KodeinMovieDao(get())
     }
 
-    single<MovieDao>(named("SqlDelight")) {
+    single<MovieDao>(named(DAO_QUALIFIER_DELIGHT)) {
         SqlMovieDao(get())
     }
 }
