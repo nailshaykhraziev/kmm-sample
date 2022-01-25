@@ -29,8 +29,10 @@ kotlin {
         summary = "Some description for the Shared Module Lalalala"
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
-        frameworkName = "shared"
         podfile = project.file("../iosApp/Podfile")
+        framework {
+            baseName = "shared"
+        }
     }
 
     sourceSets {
@@ -80,11 +82,11 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdk = 31
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(23)
-        targetSdkVersion(31)
+        minSdk = 23
+        targetSdk = 31
     }
 }
 
