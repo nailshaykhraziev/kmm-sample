@@ -12,7 +12,7 @@ plugins {
 version = "1.0"
 
 kotlin {
-    val ktorVersion = "1.6.4"
+    val ktorVersion = "1.6.7"
     val sqlDelight = "1.5.2"
 
     android()
@@ -23,7 +23,13 @@ kotlin {
         else -> ::iosX64
     }
 
-    iosTarget("ios") {}
+    iosTarget("ios") {
+        binaries {
+            framework {
+                baseName = "shared"
+            }
+        }
+    }
 
     cocoapods {
         summary = "Some description for the Shared Module Lalalala"
@@ -46,8 +52,8 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 
                 implementation("io.insert-koin:koin-core:3.1.5")
-                implementation("org.kodein.db:kodein-db:0.8.1-beta")
-                implementation("org.kodein.db:kodein-db-serializer-kotlinx:0.8.1-beta")
+                implementation("org.kodein.db:kodein-db:0.9.0-beta")
+                implementation("org.kodein.db:kodein-db-serializer-kotlinx:0.9.0-beta")
                 implementation("com.squareup.sqldelight:runtime:$sqlDelight")
             }
         }
@@ -74,7 +80,6 @@ kotlin {
                 //Network
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
                 implementation("com.squareup.sqldelight:native-driver:$sqlDelight")
-
             }
         }
         val iosTest by getting
