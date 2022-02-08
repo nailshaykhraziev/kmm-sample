@@ -2,12 +2,11 @@ package com.fs.testkmp.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import org.kodein.db.model.orm.Metadata
 
 @Serializable
 data class MovieEntity(
     @SerialName("id")
-    override val id: Int,
+    val id: Int,
     @SerialName("title")
     val title: String,
     @SerialName("vote_count")
@@ -22,7 +21,7 @@ data class MovieEntity(
     val overview: String,
     @SerialName("genre_ids")
     val genres: List<Int>?
-) : Metadata
+)
 
 @Serializable
 data class MoviesResponse(

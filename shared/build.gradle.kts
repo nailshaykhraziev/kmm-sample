@@ -31,29 +31,17 @@ kotlin {
         }
     }
 
-    cocoapods {
-        summary = "Some description for the Shared Module Lalalala"
-        homepage = "Link to the Shared Module homepage"
-        ios.deploymentTarget = "14.1"
-        podfile = project.file("../iosApp/Podfile")
-        framework {
-            baseName = "shared"
-        }
-    }
-
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
 
                 implementation("io.insert-koin:koin-core:3.1.5")
-                implementation("org.kodein.db:kodein-db:0.9.0-beta")
-                implementation("org.kodein.db:kodein-db-serializer-kotlinx:0.9.0-beta")
                 implementation("com.squareup.sqldelight:runtime:$sqlDelight")
             }
         }
@@ -75,6 +63,7 @@ kotlin {
                 implementation("junit:junit:4.13.2")
             }
         }
+
         val iosMain by getting {
             dependencies {
                 //Network
@@ -82,7 +71,9 @@ kotlin {
                 implementation("com.squareup.sqldelight:native-driver:$sqlDelight")
             }
         }
-        val iosTest by getting
+
+        androidMain.dependsOn(commonMain)
+        iosMain.dependsOn(commonMain)
     }
 }
 

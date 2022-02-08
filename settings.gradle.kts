@@ -8,4 +8,5 @@ pluginManagement {
 
 rootProject.name = "TestKmp"
 include(":androidApp")
+include(":iosApp")
 include(":shared")
