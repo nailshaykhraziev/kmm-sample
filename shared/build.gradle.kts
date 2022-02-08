@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -52,6 +51,7 @@ kotlin {
             }
         }
         val androidMain by getting {
+            dependsOn(commonMain)
             dependencies {
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
                 implementation("com.squareup.sqldelight:android-driver:$sqlDelight")
@@ -65,15 +65,13 @@ kotlin {
         }
 
         val iosMain by getting {
+            dependsOn(commonMain)
             dependencies {
                 //Network
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
                 implementation("com.squareup.sqldelight:native-driver:$sqlDelight")
             }
         }
-
-        androidMain.dependsOn(commonMain)
-        iosMain.dependsOn(commonMain)
     }
 }
 
