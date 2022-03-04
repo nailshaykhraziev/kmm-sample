@@ -19,4 +19,8 @@ class Main(
     fun getMovieById(id: Int) = flow {
         emit(movieApi.getMovieById(id))
     }.flowOn(Dispatchers.Default)
+
+    fun getMovieVideosById(id: Int) = flow {
+        emit(movieApi.getMovieVideosById(id).list)
+    }.flowOn(Dispatchers.Default)
 }

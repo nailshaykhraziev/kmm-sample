@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.os.StrictMode
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.fs.testkmp.android.screens.MovieContent
+import com.fs.testkmp.android.screens.MovieListContent
+import com.fs.testkmp.android.screens.Screen
+import com.fs.testkmp.android.screens.TrailerScreen
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
@@ -66,6 +66,12 @@ class MainActivity : AppCompatActivity() {
             composable(Screen.MovieContent.title + "/{id}") {
                 MovieContent(
                     id = it.arguments?.get("id").toString().toInt(),
+                    navController = navController
+                )
+            }
+            composable(Screen.Trailer.title + "/{url}") {
+                TrailerScreen(
+                    url = it.arguments?.get("url").toString(),
                 )
             }
         }

@@ -1,4 +1,4 @@
-package com.fs.testkmp.android
+package com.fs.testkmp.android.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,8 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
+import com.fs.testkmp.android.MainViewModel
+import com.fs.testkmp.android.R
 import com.fs.testkmp.data.Movie
-import com.fs.testkmp.data.MovieEntity
 import com.fs.testkmp.data.toMovieThumbnailUrl
 import org.koin.androidx.compose.getViewModel
 import timber.log.Timber

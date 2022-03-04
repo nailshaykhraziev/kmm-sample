@@ -1,9 +1,9 @@
-package com.fs.testkmp.android
+package com.fs.testkmp.android.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,7 +17,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
+import com.fs.testkmp.android.MainViewModel
+import com.fs.testkmp.android.R
 import com.fs.testkmp.data.Genre
 import com.fs.testkmp.data.MovieDetails
 import com.fs.testkmp.data.ProductionCountry
@@ -27,6 +30,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun MovieContent(
     id: Int,
+    navController: NavHostController,
     viewModel: MainViewModel = getViewModel()
 ) {
 
@@ -43,14 +47,18 @@ fun MovieContent(
                     placeholder(R.drawable.ic_android_black_24dp)
                     error(R.drawable.ic_android_black_24dp)
                 }
-            ))
+            ),
+            action = {
+                navController.navigate(Screen.Trailer.title + "/$it")
+            })
     }
 }
 
 @Composable
 private fun MovieDetailsContent(
     details: MovieDetails,
-    painter: Painter
+    painter: Painter,
+    action: (String) -> Unit
 ) {
     Column(Modifier.background(Color.White)) {
         Row(
@@ -102,6 +110,21 @@ private fun MovieDetailsContent(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     color = Color.Black
                 )
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    onClick = {
+                        action(details.id.toString())
+                    }) {
+                    Text(
+                        text = "Trailer",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        color = Color.Black
+                    )
+                }
             }
         }
         Text(
@@ -128,6 +151,6 @@ private fun MoviePreview() {
             overview = "Bla bla bla bla bla bla",
             productionCountries = listOf(ProductionCountry("", "USA")),
             genres = listOf(Genre(1, "tag"), Genre(2, "tag2")),
-        ), painter = resourcePainter
+        ), painter = resourcePainter, {}
     )
 }

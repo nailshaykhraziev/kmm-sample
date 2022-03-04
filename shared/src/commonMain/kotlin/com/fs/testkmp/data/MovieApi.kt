@@ -15,4 +15,8 @@ class MovieApi(
     suspend fun getMovieById(
         id: Int
     ): MovieDetails = client.get("${BASE_URL}movie/$id")
+
+    suspend fun getMovieVideosById(
+        id: Int
+    ): MovieVideoResponse = client.get("${BASE_URL}movie/$id/videos")
 }
